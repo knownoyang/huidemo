@@ -14,10 +14,18 @@ public class EmpService {
 	public PageData<Emp> getEmpByPage(int page, int pageSize, String pename) {
 		return ed.getEmpByPage(page, pageSize, pename);
 	}
-	
+
 	public List<Emp> getEmp() {
-		
-		return (List<Emp>)ed.getEmp();
+
+		return (List<Emp>) ed.getEmp();
+	}
+
+	public boolean addEmp(Emp emp) {
+		return ed.addEmp(emp);
+	}
+
+	public boolean updateEmp(Emp emp) {
+		return ed.updateEmp(emp);
 	}
 
 }

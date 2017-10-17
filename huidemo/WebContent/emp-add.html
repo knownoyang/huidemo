@@ -29,15 +29,14 @@
 </head>
 <body>
 <article class="cl pd-20">
-	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+	<form action="EmpAddServlet" method="post" class="form form-horizontal" id="form-emp-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>员工编号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="" placeholder="" id="empno" name="empno">
 			</div>
 		</div>
-		
-		</div>
+
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -68,7 +67,8 @@
 		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="button" value="提交"/>
+			    <input type="hidden" id="op" name="op" value="add">
+				<input id="btnAdd" class="btn btn-primary radius" type="submit" value="提交"/>
 			</div>
 		</div>
 	</form>
@@ -94,26 +94,24 @@ $(function(){
 		increaseArea: '20%'
 	});
 	
-	$("#form-member-add").validate({
+	$("#form-emp-add").validate({
 		rules:{
-			username:{
-				required:true,
-				minlength:2,
-				maxlength:16
+			empno:{
+				required:true
 			},
-			sex:{
-				required:true,
+			ename:{
+				required:true
 			},
-			mobile:{
-				required:true,
-				isMobile:true,
+			job:{
+				required:true
+				
 			},
-			email:{
-				required:true,
-				email:true,
+			hiredate:{
+				required:true
+				
 			},
-			uploadfile:{
-				required:true,
+			deptno:{
+				required:true
 			},
 			
 		},
@@ -123,7 +121,9 @@ $(function(){
 		submitHandler:function(form){
 			$(form).ajaxSubmit();
 			var index = parent.layer.getFrameIndex(window.name);
-			parent.$('.btn-refresh').click();
+			//parent.$('.btn-refresh').click();
+			parent.reload();
+			//parent.afterajaxreload();
 			parent.layer.close(index);
 		}
 	});

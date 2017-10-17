@@ -187,7 +187,7 @@
 				<input type="text" class="input-text" style="width:250px" placeholder="输入员工姓名、岗位、部门" id="" name="">
 				<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 			</div>
-			<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span> <span class="r">共有数据：<strong><span id="datarowcount"></span></strong> 条</span> </div>
+			<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加员工','emp-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加员工</a></span> <span class="r">共有数据：<strong><span id="datarowcount"></span></strong> 条</span> </div>
 			<div class="mt-20">
 				<table id="example" class="table table-border table-bordered table-hover table-bg table-sort">
 					<thead>
@@ -366,12 +366,14 @@ function member_del(obj,id){
 	 		maxmin: true,
 	 		shade:0.4,
 	 		title: '编辑员工信息', //显示的标题
-	 		content: 'emp-add.html', //很多种写法 其中之一直接写目标窗口(要弹出来窗口)
+	 		content: 'emp-add.html?id=1', //很多种写法 其中之一直接写目标窗口(要弹出来窗口)
 	 		success: function(layero, index){ //success可以不写
 	             var body = layer.getChildFrame('body',index);//建立父子联系
 	             var iframeWin = window[layero.find('iframe')[0]['name']];
-	             
+	              
 	             var inputList = body.find('input'); //找所有的input
+	             var op = body.find("#op");
+	             $(op).val("update");
 	             for(var j = 0; j< arr.length; j++){
 	                 $(inputList[j]).val(arr[j]); //arr[j] 数组中的值 赋值给  $(inputList[j])
 	             }
@@ -568,6 +570,7 @@ function member_del(obj,id){
             "autoWidth" : elo.gridInit.autoWidth, //是否自适应宽度
             "columns":elo.filed,//字段
             "columnDefs":elo.status,//列表状态
+            "bStateSave": false,//状态保存-------------------------------
             "language": {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "显示 _MENU_ 项结果",
@@ -768,12 +771,19 @@ function member_del(obj,id){
     //刷新页面
     //重新加载数据
     function reload(){
+    	
         eloancn.table.grid.ajax.reload();
-    }
 
+    }
+    
+  /*   function afterajaxreload()
+    {
+    	$("#example").dataTable().fnDraw(false);
+
+    }
+ */
     //销毁table
     function destroyDataTable(tableId){
-
         var dttable =  $('#'+tableId).DataTable();
         dttable.destroy();
     }
