@@ -177,7 +177,7 @@
 		        是否自动检索：<input type="checkbox" id="autoSearch">
 		   姓名：<input type="text" class="form-controlSearch input-text " placeholder="输入姓名" data-column="2" id="col2_filter" style="width:100px;">
 		     岗位：<input type="text" class="form-controlSearch input-text " placeholder="输入岗位" data-column="3" id="col3_filter" style="width:100px;">
-    入职时间：<input type="text" class="form-controlSearch input-text Wdate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})"  placeholder="输入入职时间" data-column="4" id="col4_filter" style="width:100px;">
+    入职时间：<input type="text" class="form-controlSearch input-text Wdate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" data-column="3"  placeholder="输入入职时间" data-column="4" id="col4_filter" style="width:100px;">
    
 		   </div>
 			<div class="text-c"> 入职时间范围：
@@ -192,7 +192,7 @@
 				<table id="example" class="table table-border table-bordered table-hover table-bg table-sort">
 					<thead>
 						<tr class="text-c">
-							<th width="25"><input type="checkbox" name="" value=""></th>
+							<th><input type="checkbox" name="employeeCheckAll" id="employeeCheckAll" value=""></th>
 							<th>员工编号</th>
          				    <th>姓名</th>
           				    <th>岗位</th>
@@ -220,29 +220,7 @@
 <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript"><!--
-$(function(){
-	/*暂时注释掉hui自带的dt访问	
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aoColumnDefs": [
-		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
-		]
-	});
-	*/
-    /*单击数据行 被选中，再次单击取消选中
-	$('.table-sort tbody').on( 'click', 'tr', function () {
-		if ( $(this).hasClass('selected') ) {
-			$(this).removeClass('selected');
-		}
-		else {
-			table.$('tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-		}
-	});*/
-});
+<script type="text/javascript">
 /*用户-添加*/
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
@@ -387,13 +365,10 @@ function member_del(obj,id){
   });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
-
-
-<link rel="stylesheet" type="text/css" href="plugin/datatables/jquery.dataTables.min.css"/>
-<script src="plugin/datatables/jquery.dataTables.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="plugin/datatables/jquery.dataTables.min.css"/>
+<script src="plugin/datatables/jquery.dataTables.min.js"></script> -->
 
 <script>
-
     var employee = {};
 
     employee.property = {
@@ -448,7 +423,7 @@ function member_del(obj,id){
     };
 
     employee.status = [
-        {"searchable": false, "orderable": false, "targets": 0},//第一行不进行排序和搜索
+        {"searchable": false, "orderable": false, "targets": [0,6]},//第一列,第7列不进行排序和搜索
 //        {"targets": [12], "visible": false},    //设置第13列隐藏/显示
 //        {"width": "10%", "targets": [1]},  //设置第2列宽度
 //        {
@@ -493,12 +468,12 @@ function member_del(obj,id){
     ];
 
      //导航按钮操作
-    employee.buttons =
+    /* employee.buttons =
             '<button class="btn btn-default"  type="button" id="reload" data-toggle="modal" data-target="#employeeModal">刷新表格</button>'+
             '<button class="btn btn-primary" type="button" id="batchIds" style="margin-left:20px;" data-toggle="modal" >多选</button>'+
             '<button class="btn btn-success" type="button" id="selection" style="margin-left:20px;" data-toggle="modal" >单选</button>'+
             '<button class="btn btn-success" type="button" id="search" style="margin-left:20px;" data-toggle="modal" >查询</button>'+
-            '<button class="btn btn-success" type="button" id="clearSearch" style="margin-left:20px;" data-toggle="modal" >重置</button>';
+            '<button class="btn btn-success" type="button" id="clearSearch" style="margin-left:20px;" data-toggle="modal" >重置</button>'; */
 
 </script>
 
@@ -739,10 +714,8 @@ function member_del(obj,id){
 
     //刷新页面
     //重新加载数据
-    function reload(){
-    	
+    function reload(){   	
         eloancn.table.grid.ajax.reload();
-
     }
     
     /*重新加载当前页面*/
@@ -770,9 +743,6 @@ function member_del(obj,id){
         dataTablesInit(employee);
     });
 </script>
-
-
-
 
 </body>
 </html>
