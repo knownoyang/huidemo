@@ -40,6 +40,7 @@ public class EmpAddServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String flag = "true";
 
 		String ename = request.getParameter("ename");
 		int empno = Integer.valueOf(request.getParameter("empno"));
@@ -51,10 +52,14 @@ public class EmpAddServlet extends HttpServlet {
 		Emp emp = new Emp(empno, ename, job, 0, hiredate, 0, 0, deptno);
 		System.out.println(emp);
 		if (request.getParameter("op").equals("update")) {
-			es.updateEmp(emp);
+			flag = es.updateEmp(emp)+"";
 		} else {
-			es.addEmp(emp);
+			flag = es.addEmp(emp)+"";
 		}
+		
+		PrintWriter out = response.getWriter();
+		out.print(flag);
+		out.close();
 
 	}
 

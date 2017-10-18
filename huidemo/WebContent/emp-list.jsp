@@ -232,7 +232,7 @@ $(function(){
 		]
 	});
 	*/
-    /*单击数据行 被选中，再次单击取消选中*/
+    /*单击数据行 被选中，再次单击取消选中
 	$('.table-sort tbody').on( 'click', 'tr', function () {
 		if ( $(this).hasClass('selected') ) {
 			$(this).removeClass('selected');
@@ -241,7 +241,7 @@ $(function(){
 			table.$('tr.selected').removeClass('selected');
 			$(this).addClass('selected');
 		}
-	});
+	});*/
 });
 /*用户-添加*/
 function member_add(title,url,w,h){
@@ -389,37 +389,6 @@ function member_del(obj,id){
 <!--/请在上方写此页面业务相关的脚本-->
 
 
-<!-- 从之前datatable案例中移植过来的代码  头部检索以及表格头部信息-->
-<!-- <div class="container">
-    是否自动检索：<input type="checkbox" id="autoSearch">
-    <br>
-    员工编号：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="1" id="col1_filter">
-    <br>
-    姓名：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="2" id="col2_filter">
-    <br>
-    岗位：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="3" id="col3_filter">
-    <br>
-    入职时间：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="4" id="col4_filter">
-    <br>
-    部门编号：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="5" id="col5_filter">
-    <br>
-    编号：<input type="text" class="form-controlSearch" placeholder="请输入关键字查询" data-column="6" id="col6_filter">
-    <br>
-    <hr>
-    <table id="example" class="display">
-        <thead>
-        <tr>
-            <th><input type="checkbox" id="employeeCheckAll"></th>
-            <th>员工编号</th>
-            <th>姓名</th>
-            <th>岗位</th>
-            <th>入职时间</th>
-            <th>部门编号</th>
-        </tr>
-        </thead>
-    </table>
-</div> -->
-<!-- 头部检索以及表格标题头结束 -->
 <link rel="stylesheet" type="text/css" href="plugin/datatables/jquery.dataTables.min.css"/>
 <script src="plugin/datatables/jquery.dataTables.min.js"></script>
 
@@ -456,7 +425,7 @@ function member_del(obj,id){
         lengthChange:true,
         paging:true,
         scrollCollapse:true,
-        serverSide:false,
+        serverSide:false,//服务端处理,默认为false
         search:true,
         processing:true,
         scrollY:500,
@@ -570,7 +539,7 @@ function member_del(obj,id){
             "autoWidth" : elo.gridInit.autoWidth, //是否自适应宽度
             "columns":elo.filed,//字段
             "columnDefs":elo.status,//列表状态
-            "bStateSave": false,//状态保存-------------------------------
+            //"bStateSave":true,//状态保存-------------------------------使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容
             "language": {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "显示 _MENU_ 项结果",
@@ -776,12 +745,17 @@ function member_del(obj,id){
 
     }
     
-  /*   function afterajaxreload()
+    /*重新加载当前页面*/
+    function afterajaxreload()
     {
-    	$("#example").dataTable().fnDraw(false);
+    	//$("#").dataTable().fnDraw(boolean);重绘方法 如果为true则回到表格初始状态，如果为false只加载当前页面
+    	// $("#example").dataTable().fnDraw(true); --这种是服务器端分页写法(物理分页)
+    	
+    	var dt = $("#example").DataTable();
+    	dt.ajax.reload(null,false)
 
     }
- */
+ 
     //销毁table
     function destroyDataTable(tableId){
         var dttable =  $('#'+tableId).DataTable();
